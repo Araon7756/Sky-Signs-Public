@@ -1,0 +1,12 @@
+{
+  "parent": "skysigns:block/barometer_inventory",
+  "textures": {
+    "particle": "minecraft:block/copper_block",
+    "frame": "minecraft:block/copper_block",
+    "dial": "minecraft:block/light_blue_concrete",
+    "needle": "minecraft:block/lapis_block",
+    "mark": "minecraft:block/black_concrete",
+    "trim": "minecraft:block/oxidized_copper",
+    "metal": "minecraft:block/copper_block"
+  }
+}

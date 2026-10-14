@@ -1,0 +1,97 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    accessWidenerPath = file('src/main/resources/skysigns.accesswidener')
+
+    mods {
+        "skysigns" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = 'skysigns-client-tests'
+        enableGameTests = false
+        enableClientGameTests = true
+        clearRunDirectory = false
+    }
+}
+
+// Disposable ordinary-client measurement: no fabric.client.gametest property.
+loom.runs {
+    performanceClient {
+        client()
+        source sourceSets.gametest
+        runDir 'build/run/performanceClient'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// Carry the exact software license, scope, media grant, and third-party notices.
+def skySignsLegalDocuments = [
+    'LICENSE',
+    'COPYRIGHT',
+    'docs/legal/MEDIA_PERMISSION.md',
+    'docs/legal/LICENSE_SCOPE.md',
+    'docs/legal/THIRD_PARTY_NOTICES.md',
+    'docs/legal/SOURCE_PROVENANCE.md',
+    'LICENSES/MIT-legacy.txt',
+    'LICENSES/Apache-2.0.txt'
+]
+
+tasks.withType(Jar).configureEach {
+    from(project.projectDir) {
+        include skySignsLegalDocuments
+    }
+}
+
+tasks.named('sourcesJar', Jar) {
+    from('CONTRIBUTING.md')
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

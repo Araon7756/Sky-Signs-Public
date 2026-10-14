@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "skysigns-client-tests",
+  "version": "1.0.0",
+  "name": "Sky Signs Client Tests",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "environment": "client",
+  "mixins": ["skysigns.issue9.mixins.json", "skysigns.inf01.mixins.json"],
+  "entrypoints": {
+    "client": ["cn.skysigns.test.NormalPerformanceClient"],
+    "fabric-client-gametest": [
+      "cn.skysigns.test.SkySignsClientGameTest"
+    ]
+  },
+  "depends": {
+    "skysigns": "*",
+    "fabric-api": "*"
+  }
+}

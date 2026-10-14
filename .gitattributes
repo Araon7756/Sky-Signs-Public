@@ -1,0 +1,17 @@
+* text=auto
+*.java text eol=lf
+*.gradle text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+/gradlew text eol=lf
+/gradlew.bat text eol=crlf
+/LICENSE -text
+/LICENSES/** -text
+*.png -text
+*.jar -text
+*.dat -text
+*.zip -text
+test-infrastructure/fabric-client-gametest/** -text
+test-infrastructure/fabric-client-gametest/atomic-wait.patch -whitespace
+scripts/network-synchronizer-patch.gradle text eol=lf

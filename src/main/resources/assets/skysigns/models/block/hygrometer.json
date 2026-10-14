@@ -1,0 +1,16 @@
+{
+  "parent": "skysigns:block/barometer",
+  "textures": {
+    "particle": "minecraft:block/copper_block",
+    "frame": "minecraft:block/copper_block",
+    "dial": "minecraft:block/light_blue_concrete",
+    "needle": "minecraft:block/lapis_block",
+    "mark": "minecraft:block/black_concrete",
+    "trim": "minecraft:block/oxidized_copper",
+    "metal": "minecraft:block/copper_block"
+  },
+  "display": {
+    "gui": {"rotation": [30, 225, 0], "scale": [0.85, 0.85, 0.85]},
+    "ground": {"translation": [0, 3, 0], "scale": [0.3, 0.3, 0.3]}
+  }
+}

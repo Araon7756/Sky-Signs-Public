@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/copper_block",
+    "copper": "minecraft:block/copper_block",
+    "dark": "minecraft:block/exposed_copper"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 13, 9],
+      "faces": {
+        "north": {"texture": "#dark"},
+        "east": {"texture": "#dark"},
+        "south": {"texture": "#dark"},
+        "west": {"texture": "#dark"},
+        "up": {"texture": "#dark"},
+        "down": {"texture": "#dark"}
+      }
+    },
+    {
+      "from": [6.5, 12, 6.5],
+      "to": [9.5, 15, 9.5],
+      "faces": {
+        "north": {"texture": "#copper"},
+        "east": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "down": {"texture": "#copper"}
+      }
+    }
+  ]
+}

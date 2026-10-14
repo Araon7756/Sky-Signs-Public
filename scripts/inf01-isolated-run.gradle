@@ -1,0 +1,34 @@
+// Dedicated disposable directories; never clear/reuse an earlier test instance.
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+allprojects { afterEvaluate {
+    def runId = providers.gradleProperty('inf01RunId').get()
+    if (!(runId ==~ /[a-zA-Z0-9_-]+/)) throw new GradleException('Invalid inf01RunId')
+    def runPath = file('build/run/inf01-' + runId)
+    if (runPath.exists()) throw new GradleException('INF-01 run directory already exists: ' + runPath)
+    def framework = providers.gradleProperty('inf01Framework').getOrElse('false') == 'true'
+    if (framework && (System.getenv('SKYSIGNS_INF01_SELFTEST') != '1' || System.getenv('SKYSIGNS_INF01_CASE') != 'native'))
+        throw new GradleException('Framework-only variant is restricted to the native INF-01 control')
+    loom.runs.getByName('clientGameTest').runDir('build/run/inf01-' + runId)
+    tasks.named('processGametestResources').configure {
+        inputs.property('inf01Framework', framework)
+        doLast {
+            if (framework) {
+                def metadata = new File(destinationDir, 'fabric.mod.json')
+                def mod = new JsonSlurper().parse(metadata)
+                mod.depends = ['fabric-api': '*']
+                mod.entrypoints = ['fabric-client-gametest': ['cn.skysigns.test.Inf01FrameworkControl']]
+                mod.mixins = ['skysigns.inf01.mixins.json']
+                metadata.setText(JsonOutput.prettyPrint(JsonOutput.toJson(mod)), 'UTF-8')
+            }
+        }
+    }
+    tasks.named('runClientGameTest').configure {
+        systemProperty 'inf01.framework', framework.toString()
+        if (framework) {
+            def product = (sourceSets.main.output.files + sourceSets.client.output.files) as Set
+            classpath = classpath.filter { !product.contains(it) }
+        }
+    }
+} }

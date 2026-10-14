@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "skysigns:block/weather_station", "y": 180 },
+    "facing=east": { "model": "skysigns:block/weather_station", "y": 270 },
+    "facing=south": { "model": "skysigns:block/weather_station" },
+    "facing=west": { "model": "skysigns:block/weather_station", "y": 90 }
+  }
+}

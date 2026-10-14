@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skysigns:block/weather_vane"
+      }
+    }
+  ]
+}

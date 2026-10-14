@@ -1,0 +1,28 @@
+.gradle/
+build/
+run/
+run-*/
+out/
+.idea/
+*.iml
+
+# Local build artifacts; keep release/test notes in outputs/.
+outputs/*.jar
+*.log
+*.hprof
+.vscode/
+
+# Local-only evidence, worlds and launch credentials
+/out/
+/outputs/
+/run-*/
+/logs/
+/saves/
+*.log
+*.mp4
+*.mkv
+.env
+.env.*
+*.key
+*.pem
+*private*args*

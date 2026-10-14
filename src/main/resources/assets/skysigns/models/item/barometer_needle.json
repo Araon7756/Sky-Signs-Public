@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"particle": "minecraft:block/redstone_block", "needle": "minecraft:block/redstone_block"},
+  "elements": [{
+    "from": [7.6, 6.7, 7.8], "to": [8.4, 10, 8.2],
+    "faces": {
+      "north": {"texture": "#needle"}, "east": {"texture": "#needle"},
+      "south": {"texture": "#needle"}, "west": {"texture": "#needle"},
+      "up": {"texture": "#needle"}, "down": {"texture": "#needle"}
+    }
+  }],
+  "display": {"fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}}
+}

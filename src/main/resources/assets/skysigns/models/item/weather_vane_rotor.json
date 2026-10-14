@@ -1,0 +1,52 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/copper_block",
+    "copper": "minecraft:block/copper_block"
+  },
+  "elements": [
+    {
+      "from": [1, 7.25, 7.25],
+      "to": [15, 8.75, 8.75],
+      "faces": {
+        "north": {"texture": "#copper"},
+        "east": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "down": {"texture": "#copper"}
+      }
+    },
+    {
+      "from": [12, 5.5, 7.25],
+      "to": [15, 10.5, 8.75],
+      "faces": {
+        "north": {"texture": "#copper"},
+        "east": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "down": {"texture": "#copper"}
+      }
+    },
+    {
+      "from": [2, 8.75, 7.25],
+      "to": [5, 11.5, 8.75],
+      "faces": {
+        "north": {"texture": "#copper"},
+        "east": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "down": {"texture": "#copper"}
+      }
+    }
+  ],
+  "display": {
+    "fixed": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 0, 0],
+      "scale": [1, 1, 1]
+    }
+  }
+}

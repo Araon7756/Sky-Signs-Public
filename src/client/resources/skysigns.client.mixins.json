@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "cn.skysigns.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "WeatherRenderingMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

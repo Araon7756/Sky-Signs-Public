@@ -1,0 +1,101 @@
+// Explicit test-only source patch; never modifies Loom caches, product dependencies, or release JARs.
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+import java.util.zip.ZipFile
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
+gradle.projectsEvaluated { allprojects {
+    if (providers.gradleProperty('networkSynchronizerPatch').getOrElse('false') != 'true')
+        throw new GradleException('This init script requires -PnetworkSynchronizerPatch=true')
+    if (System.getenv('SKYSIGNS_NETWORK_WAIT_GUARD') != null)
+        throw new GradleException('The old network wait guard must be absent')
+    def patchRoot = file(providers.gradleProperty('networkPatchRoot').getOrElse(projectDir.absolutePath))
+    def patchDirectory = new File(patchRoot, 'test-infrastructure/fabric-client-gametest')
+    def provenance = new JsonSlurper().parse(new File(patchDirectory, 'provenance.json'))
+    sourceSets.gametest.java.srcDir(new File(patchDirectory, 'activation/java'))
+    tasks.named('processGametestResources').configure {
+        inputs.property('networkPatchActivation', true)
+        doLast {
+            def metadataFile = new File(destinationDir, 'fabric.mod.json')
+            def metadata = new JsonSlurper().parse(metadataFile)
+            metadata.entrypoints.client = (metadata.entrypoints.client ?: []) + ['cn.skysigns.test.infrastructure.NetworkPatchActivation']
+            metadataFile.setText(JsonOutput.prettyPrint(JsonOutput.toJson(metadata)), 'UTF-8')
+        }
+    }
+    def originalClasspath = tasks.named('runClientGameTest').get().classpath
+    def modules = originalClasspath.files.findAll {
+        it.name.startsWith('fabric-client-gametest-api-v1-') && it.name.endsWith('-4.2.13+14b92d896f.jar')
+                && it.parentFile.parentFile.name.endsWith('-client')
+    }
+    if (modules.size() != 1) throw new GradleException('Require exactly one pinned named client gametest module; found ' + modules)
+    def originalModule = modules.first()
+    def classPath = 'net/fabricmc/fabric/impl/client/gametest/threading/NetworkSynchronizer.class'
+    def sourcePath = classPath.replace('.class', '.java')
+    def sha256 = { byte[] bytes -> MessageDigest.getInstance('SHA-256').digest(bytes).encodeHex().toString() }
+    new ZipFile(originalModule).withCloseable { zip ->
+        def originalHash = sha256(zip.getInputStream(zip.getEntry(classPath)).bytes)
+        if (originalHash != provenance.unpatchedNamedClassSha256)
+            throw new GradleException('Pinned original NetworkSynchronizer class hash mismatch: ' + originalHash)
+    }
+    def compilePatch = tasks.register('compileNetworkSynchronizerTestPatch', JavaCompile) {
+        source new File(patchDirectory, sourcePath)
+        classpath = sourceSets.gametest.compileClasspath
+        destinationDirectory = layout.buildDirectory.dir('test-framework-patch/classes')
+        options.release = 21
+    }
+    def patchedModule = layout.buildDirectory.file('test-framework-patch/fabric-client-gametest-api-v1-network-synchronizer-test-patch-4.2.13.jar')
+    def patchJar = tasks.register('networkSynchronizerPatchedTestModule') {
+        dependsOn compilePatch
+        inputs.file(originalModule)
+        inputs.files(compilePatch.flatMap { it.destinationDirectory })
+        outputs.file(patchedModule)
+        doLast {
+            def output = patchedModule.get().asFile
+            output.parentFile.mkdirs()
+            def patchedClass = new File(compilePatch.get().destinationDirectory.get().asFile, classPath)
+            // Copy each original entry verbatim, including the manifest and inner RunnableBox class.
+            new ZipFile(originalModule).withCloseable { zip ->
+                new ZipOutputStream(new FileOutputStream(output)).withCloseable { stream ->
+                    zip.entries().toList().sort { it.name }.each { entry ->
+                        def replacement = new ZipEntry(entry.name)
+                        replacement.time = 0
+                        stream.putNextEntry(replacement)
+                        if (!entry.directory) stream.write(entry.name == classPath ? patchedClass.bytes : zip.getInputStream(entry).bytes)
+                        stream.closeEntry()
+                    }
+                }
+            }
+        }
+    }
+    tasks.named('runClientGameTest').configure {
+        dependsOn patchJar
+        classpath = files(patchedModule) + originalClasspath.filter { it != originalModule }
+        doFirst {
+            def originalBytes
+            new ZipFile(originalModule).withCloseable { zip -> originalBytes = zip.getInputStream(zip.getEntry(classPath)).bytes }
+            def patchedFile = patchedModule.get().asFile
+            def changedEntries = []
+            new ZipFile(originalModule).withCloseable { originalZip ->
+                new ZipFile(patchedFile).withCloseable { patchedZip ->
+                    def originalEntries = originalZip.entries().toList().findAll { !it.directory }.collect { it.name }.toSet()
+                    def patchedEntries = patchedZip.entries().toList().findAll { !it.directory }.collect { it.name }.toSet()
+                    if (originalEntries != patchedEntries) throw new GradleException('Patched module entry set differs from original')
+                    originalEntries.each { name ->
+                        if (sha256(originalZip.getInputStream(originalZip.getEntry(name)).bytes) != sha256(patchedZip.getInputStream(patchedZip.getEntry(name)).bytes)) changedEntries.add(name)
+                    }
+                }
+            }
+            if (changedEntries != [classPath]) throw new GradleException('Require only outer NetworkSynchronizer class replacement: ' + changedEntries)
+            def result = [upstreamModule: provenance.upstreamModule, originalClassSha256: sha256(originalBytes),
+                    patchedSourceSha256: sha256(new File(patchDirectory, sourcePath).bytes),
+                    patchedClassSha256: sha256(new File(compilePatch.get().destinationDirectory.get().asFile, classPath).bytes),
+                    patchedModuleSha256: sha256(patchedFile.bytes), replacedEntries: changedEntries,
+                    oldWaitGuard: false, productDependenciesChanged: false]
+            new File(patchedFile.parentFile, 'manifest.json').setText(JsonOutput.prettyPrint(JsonOutput.toJson(result)), 'UTF-8')
+            systemProperty 'network.patch.classSha256', result.patchedClassSha256
+            logger.lifecycle('NS_TEST_FRAMEWORK_PATCH ' + JsonOutput.toJson(result))
+        }
+    }
+} }

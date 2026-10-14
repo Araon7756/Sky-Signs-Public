@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["BVH", "CRC", "III"],
+  "key": {
+    "B": "skysigns:barometer",
+    "V": "skysigns:weather_vane",
+    "H": "skysigns:hygrometer",
+    "C": "minecraft:copper_ingot",
+    "R": "minecraft:redstone",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {"id": "skysigns:weather_station", "count": 1}
+}

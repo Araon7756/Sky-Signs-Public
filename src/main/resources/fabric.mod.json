@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "skysigns",
+  "version": "${version}",
+  "name": "天象 / Sky Signs",
+  "icon": "assets/skysigns/icon.png",
+  "description": "让天气可以被观测、预测和利用的原版风格天气模组。",
+  "authors": [
+    "Sky Signs contributors"
+  ],
+  "contact": {},
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "environment": "*",
+  "accessWidener": "skysigns.accesswidener",
+  "entrypoints": {
+    "main": [
+      "cn.skysigns.SkySigns"
+    ],
+    "client": [
+      "cn.skysigns.client.SkySignsClient"
+    ]
+  },
+  "mixins": [
+    "skysigns.mixins.json",
+    "skysigns.client.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.10",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

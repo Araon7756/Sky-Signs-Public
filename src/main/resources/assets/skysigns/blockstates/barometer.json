@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "skysigns:block/barometer", "y": 180 },
+    "facing=east": { "model": "skysigns:block/barometer", "y": 270 },
+    "facing=south": { "model": "skysigns:block/barometer" },
+    "facing=west": { "model": "skysigns:block/barometer", "y": 90 }
+  }
+}

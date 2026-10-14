@@ -1,0 +1,8 @@
+{
+  "upstreamModule": "net.fabricmc.fabric-api:fabric-client-gametest-api-v1:4.2.13+14b92d896f",
+  "license": "Apache-2.0",
+  "unmappedSourceSha256": "19b9f0428d624cda6dd1d4201073d2081c3a28da4053f49f96a1a5783335b204",
+  "yarnNamedSourceSha256": "5608a6591edffd531421e9506805d4e08b724c89b172c611e9f1d2596da4fecd",
+  "unpatchedNamedClassSha256": "9d7ee759a0abc48a799e5eab82bacdecb05791174fe897b9438b3c16fb2e9243",
+  "scope": "Local test-only runtime module; only the NetworkSynchronizer outer class is replaced. No product dependency, shipped class, existing cache, or original binary is modified."
+}

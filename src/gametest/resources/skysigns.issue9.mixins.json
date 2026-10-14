@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "cn.skysigns.test.mixin",
+  "plugin": "cn.skysigns.test.mixin.Issue9MixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "HumidityMeasurementMixin",
+    "NetworkDiagnosticMixin",
+    "NetworkWaitGuardMixin",
+    "P1ObservationMixin",
+    "P1ReadingsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

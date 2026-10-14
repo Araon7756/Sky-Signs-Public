@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" C ", "CLC", " B "],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "L": "minecraft:lapis_lazuli",
+    "B": "minecraft:glass_bottle"
+  },
+  "result": {"id": "skysigns:hygrometer", "count": 1}
+}

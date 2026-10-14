@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" C ", "CQC", " R "],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "Q": "minecraft:quartz",
+    "R": "minecraft:redstone"
+  },
+  "result": {"id": "skysigns:barometer", "count": 1}
+}

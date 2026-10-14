@@ -1,0 +1,42 @@
+// Windows long-classpath workaround: keep Fabric loader libraries out of Knot.
+// Use with --init-script scripts/windows-client-argfile.gradle; default is client GameTest.
+allprojects { afterEvaluate {
+ def selected = providers.gradleProperty('launchTask').getOrElse('runClientGameTest')
+ if (!(selected in ['runClient', 'runClientGameTest', 'runPerformanceClient'])) {
+  throw new GradleException('launchTask must select a client task')
+ }
+ def original = tasks.named(selected).get()
+ def runName = selected.substring(3, 4).toLowerCase(java.util.Locale.ROOT) + selected.substring(4)
+ def settings = project.extensions.getByName('loom').runs.getByName(runName)
+ tasks.register('runWindowsClient', JavaExec) {
+  javaLauncher.set(original.javaLauncher)
+  dependsOn original.classpath
+  dependsOn original.taskDependencies.getDependencies(original)
+  doFirst {
+   def source = original
+   def f = new File(project.layout.buildDirectory.get().asFile, "launch-args/${selected}.args")
+   f.parentFile.mkdirs()
+   def cp = source.classpath.asPath.replace('\\', '/')
+   if (cp.contains('"') || cp.contains('\n') || cp.contains('\r')) {
+    throw new GradleException('Classpath contains characters unsupported by this argument file')
+   }
+   // Java's Windows launcher reads argument files with its native encoding,
+   // even on JDK 21 where the Java default charset is UTF-8.
+   def charset = java.nio.charset.Charset.forName(System.getProperty('native.encoding'))
+   def bytes = charset.newEncoder().encode(java.nio.CharBuffer.wrap('-classpath\n"' + cp + '"\n'))
+   byte[] encoded = new byte[bytes.remaining()]
+   bytes.get(encoded)
+   java.nio.file.Files.write(f.toPath(), encoded)
+   minHeapSize = source.minHeapSize
+   maxHeapSize = source.maxHeapSize
+   enableAssertions = source.enableAssertions
+   mainClass.set(source.mainClass)
+   args = source.args
+   jvmArgs = source.jvmArgs + ['@' + f.absolutePath]
+   systemProperties = source.systemProperties
+   workingDir = project.file(settings.runDir)
+   workingDir.mkdirs()
+   environment = source.environment + settings.environmentVariables
+  }
+ }
+} }

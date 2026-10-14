@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "ICI",
+    " S "
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "I": "minecraft:iron_nugget",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "skysigns:weather_vane",
+    "count": 1
+  }
+}

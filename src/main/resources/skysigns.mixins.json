@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "cn.skysigns.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["ServerWeatherMixin"],
+  "injectors": {"defaultRequire": 1}
+}

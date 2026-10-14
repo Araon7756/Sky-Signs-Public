@@ -1,0 +1,37 @@
+--- upstream/NetworkSynchronizer.java
++++ patched/NetworkSynchronizer.java
+@@ -127,19 +127,25 @@
+ 		}
+ 
+ 		while (inFlightPackets.get() > 0 || !mainThreadPacketHandlers.isEmpty()) {
+-			while (inFlightPackets.get() > 0 && mainThreadPacketHandlers.isEmpty()) {
+-				morePacketsLock.lock();
+-
+-				try {
+-					if (!morePacketsCondition.await(10, TimeUnit.SECONDS)) {
++			// Test-framework source repair: check the condition while holding its lock.
++			// A notification completed before lock acquisition is reflected by the predicate.
++			morePacketsLock.lock();
++
++			try {
++				long remainingNanos = TimeUnit.SECONDS.toNanos(10);
++
++				while (inFlightPackets.get() > 0 && mainThreadPacketHandlers.isEmpty()) {
++					if (remainingNanos <= 0) {
+ 						markInvalid();
+ 						checkInvalid();
+ 					}
+-				} catch (InterruptedException e) {
+-					throw new RuntimeException(e);
+-				} finally {
+-					morePacketsLock.unlock();
++
++					remainingNanos = morePacketsCondition.awaitNanos(remainingNanos);
+ 				}
++			} catch (InterruptedException e) {
++				throw new RuntimeException(e);
++			} finally {
++				morePacketsLock.unlock();
+ 			}
+ 
+ 			isRunningNetworkTasks = true;
