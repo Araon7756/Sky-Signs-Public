@@ -102,6 +102,8 @@ Linux/macOS 可用 `bash ./gradlew build --no-daemon` 和 `bash ./gradlew compil
 
 构建产物位于 `build/libs/`。当前仓库处于持续开发阶段；若从最新源码构建遇到问题，请先确认所用分支与提交，再提供完整的 Gradle 错误输出。许可证及历史版本范围见下文。
 
+Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` 的 Pull Request 和 `main` 推送上检查 Java 21 构建、测试源码编译及 Gitleaks。CI 不启动 Minecraft；`test NO-SOURCE`、构建和源码编译成功均不代表客户端、多人、专用服务端、光影或长期稳定性通过。具体范围见 [测试说明](docs/TESTING.md#public-仓库基础-ci)。
+
 ## 许可证与媒体许可
 
 本源码版本中有权许可的项目自有内容采用 [PolyForm Noncommercial 1.0.0](LICENSE) 官方原文，许可主体通知见 [COPYRIGHT](COPYRIGHT)。软件范围、第三方例外及历史 MIT 边界见 [LICENSE_SCOPE.md](docs/legal/LICENSE_SCOPE.md)。主要许可证标识不表示仓库所有文件都只有同一许可。

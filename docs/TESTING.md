@@ -2,6 +2,14 @@
 
 # 构建与回归测试
 
+## Public 仓库基础 CI
+
+[Public CI](../.github/workflows/public-ci.yml) 使用只读 `contents: read` 权限，在针对 `main` 的 Pull Request 和 `main` 推送上运行两个独立 job：`Java 21 build` 与 `Gitleaks`。前者使用 Java 21 和现有 Wrapper，执行 `bash ./gradlew build compileGametestJava --no-daemon --max-workers=4`；通过 bash 调用不依赖 Wrapper 的 Git 执行位，也不升级构建或游戏依赖。
+
+Gitleaks 固定为 8.30.1，下载官方 Linux 发行并验证固定 SHA-256；完整检出公开 Git 历史，分别检查所有已获取引用的历史和当前提交的跟踪文件。扫描使用默认规则、脱敏输出、无 baseline，并检查实际扫描字节数大于零。checkout 与 Java 官方 Action 固定到精确 commit SHA，不使用私人 token 或 repository secret。
+
+这套 CI 不启动 Minecraft、客户端 GameTest 或专用服务器，不接受 EULA，不上传构建 artifact，不创建 tag、Release 或部署。`compileGametestJava` 只验证源码编译；`test NO-SOURCE` 不代表功能测试通过。游戏、多人、光影、真实旧存档和长期验证仍按下文单独记录。
+
 ## 0.7.0-alpha.1 Local 候选验收（2026-10-13，尚未发布）
 
 精确候选 `1cf474050620deefa9719c1eccfa9574f85a04ad` 的 build／compileGametestJava、显式 #49 默认完整回归、独立 P1 专项均退出 0。默认回归 17 ready／4 epoch／16 截图，认证与逐阶段发送集合核验通过；普通 alpha.1 JAR 新隔离实例完成真实 v1 自动世界副本首次迁移／重开及部分暂停、手动风、自动恢复，两次正常保存退出。生产 JAR SHA-256 为 `4f11d32dd5d23365306456566d05e3785b27458f0543be3d9d1501e46829076a`，不含 Sky Signs 测试模组／#49 类；普通组合的 Fabric API 自带 dormant gametest API 不等于测试模组激活。
