@@ -1,0 +1,89 @@
+name: Public CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gradle:
+    name: Java 21 build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build and compile client test source
+        run: bash ./gradlew build compileGametestJava --no-daemon --max-workers=4
+
+  gitleaks:
+    name: Gitleaks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout full public history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install verified Gitleaks 8.30.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/gitleaks_8.30.1_linux_x64.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output "$archive"
+          printf '%s  %s\n' \
+            '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' \
+            "$archive" | sha256sum --check --strict
+          mkdir -p "$RUNNER_TEMP/gitleaks-bin"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/gitleaks-bin" gitleaks
+          "$RUNNER_TEMP/gitleaks-bin/gitleaks" version
+      - name: Scan history and current tracked content
+        shell: bash
+        run: |
+          set -euo pipefail
+          scanner="$RUNNER_TEMP/gitleaks-bin/gitleaks"
+          current="$RUNNER_TEMP/gitleaks-current"
+          unset GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML
+          test "$(git rev-parse --is-shallow-repository)" = false
+          test "$(git rev-list --all --count)" -gt 0
+          mkdir "$current"
+          git archive HEAD | tar -x -C "$current"
+          "$scanner" git . --log-opts='--all' --redact=100 --no-banner --no-color \
+            --ignore-gitleaks-allow --max-archive-depth=3 --max-decode-depth=5 \
+            --report-format=json --report-path="$RUNNER_TEMP/gitleaks-history.json" \
+            2>&1 | tee "$RUNNER_TEMP/gitleaks-history.log"
+          "$scanner" dir "$current" --redact=100 --no-banner --no-color \
+            --ignore-gitleaks-allow --max-archive-depth=3 --max-decode-depth=5 \
+            --report-format=json --report-path="$RUNNER_TEMP/gitleaks-current.json" \
+            2>&1 | tee "$RUNNER_TEMP/gitleaks-current.log"
+          python3 - "$RUNNER_TEMP" <<'PY'
+          import json, pathlib, re, sys
+          root = pathlib.Path(sys.argv[1])
+          for scope in ('history', 'current'):
+              report = json.loads((root / f'gitleaks-{scope}.json').read_text())
+              if report:
+                  raise SystemExit(f'{scope}: secret findings; stop')
+              log = (root / f'gitleaks-{scope}.log').read_text()
+              size = re.search(r'scanned ~([0-9]+) bytes', log)
+              if size is None or int(size.group(1)) <= 0:
+                  raise SystemExit(f'{scope}: no verified nonzero scan coverage')
+              print(f'{scope}: 0 findings; {size.group(1)} bytes scanned')
+          PY
