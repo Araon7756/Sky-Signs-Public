@@ -2,9 +2,9 @@
 
 为 Minecraft Java 版打造的原版风格天气观测模组。天象让晴天、降雨、雷暴和风况随时间变化，并提供风向标、气压计、湿度计与气象站，让玩家能观察当前环境和下一阶段的天气。
 
-> **当前公开源码版本：0.7.0-alpha.1 / Minecraft Java 1.21.10 / Fabric / Java 21。** 本仓库提供经审核的独立公开源码快照。原 Private 开发仓库继续保存完整历史和原始证据。版本为 P1 阶段预览，不代表完整 0.7 功能或稳定版。
+> **当前公开源码版本：0.7.0-alpha.2 / Minecraft Java 1.21.10 / Fabric / Java 21。** 本仓库提供经审核的独立公开源码快照。原 Private 开发仓库继续保存完整历史和原始证据。版本为 P1 阶段预览，不代表完整 0.7 功能或稳定版。
 
-本仓库提供源码与构建方法，当前 Public 仓库暂未提供独立公开 Release 下载。原 Private 仓库中的 Release、分支、标签和 Issue 不随快照迁移。发行来源与验收边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)；安装前完整备份世界，并先在副本中试用。
+本仓库提供源码与构建方法，当前 Public 仓库暂未提供独立公开 Release 下载。`0.7.0-alpha.2` 是首个计划公开发布二进制的 Public 版本；历史 Private `v0.7.0-alpha.1` 保持原样，不重新发布、不覆盖、不删除。原 Private 仓库中的 Release、分支、标签和 Issue 不随快照迁移。发行来源与验收边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)；安装前完整备份世界，并先在副本中试用。
 
 ![气象站中文界面](docs/images/beta7-station-zh-cn.png)
 
@@ -53,7 +53,7 @@ beta.7 为两个表盘增加统一的分层顶盖、铜边框与轴心细节，�
 
 1.21.10 + Fabric 是当前支持基线。后续计划逐步支持其他 Minecraft Java 版本，并评估 NeoForge、Forge 等其他加载器；具体目标组合、维护范围和发布日期待评估确认，见 [多版本与多加载器支持规划](docs/ROADMAP.md#多版本与多加载器支持规划)。当前安装仍按上表要求。
 
-从源码构建得到 `build/libs/skysigns-0.7.0-alpha.1.jar`，将普通 JAR 放入游戏实例的 `mods` 文件夹，并确保只保留一个天象版本；不要安装 `-sources.jar`。构建方法见下文。
+从源码构建得到 `build/libs/skysigns-0.7.0-alpha.2.jar`，将普通 JAR 放入游戏实例的 `mods` 文件夹，并确保只保留一个天象版本；不要安装 `-sources.jar`。构建方法见下文。
 
 原 alpha.1 发行在隔离单人实例中已有构建、测试源码编译、显式启用 #49 的默认完整客户端回归、独立 P1 专项及真实 WEATHER v1 自动世界副本的有限验收记录。此处是历史结果摘要，本次公开快照验证只执行构建与源码编译，不重跑客户端，不将历史游戏通过转为当前快照实机通过。详见 [测试说明](docs/TESTING.md) 与 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)。
 
@@ -112,6 +112,6 @@ Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` �
 
 非商业个人用途及正式文本列明的组织用途按 PolyForm 原文判断。收费服务器和一般企业业务部署可能需要单独商业授权；媒体许可不提供这些软件运营权限。收费分发、收费整合包等场景涉及 Distribution License 与用途条款的解释空间，请联系维护者确认具体模式。此联系建议不把所有收费分发宣称为已被明确禁止，也不增加正式文本未设的批准义务或缩减其已授权利。
 
-**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。本次已发布的 v0.7.0-alpha.1（原 Private 档案；不随此快照公开） 普通生产 JAR 随附 PolyForm Noncommercial 1.0.0 与上述法律文件；精确标签、构建来源及摘要见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)，不再以早期暂定的 beta.1 名称判断许可采用状态。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
+**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。历史已发布的 v0.7.0-alpha.1（原 Private 档案；不随此快照公开） 普通生产 JAR 随附 PolyForm Noncommercial 1.0.0 与上述法律文件；精确标签、构建来源及摘要见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)，不再以早期暂定的 beta.1 名称判断许可采用状态。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
 
 第三方源码拷贝、Wrapper 和依赖见 [THIRD_PARTY_NOTICES.md](docs/legal/THIRD_PARTY_NOTICES.md)，来源记录见 [SOURCE_PROVENANCE.md](docs/legal/SOURCE_PROVENANCE.md)，未来外部贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。本项目采用非商业源码可用许可，不将新许可称为 OSI 意义上的开源许可。
