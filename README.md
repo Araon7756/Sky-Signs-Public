@@ -4,7 +4,7 @@
 
 > **当前公开源码版本：0.7.0-alpha.2 / Minecraft Java 1.21.10 / Fabric / Java 21。** 本仓库提供经审核的独立公开源码快照。原 Private 开发仓库继续保存完整历史和原始证据。版本为 P1 阶段预览，不代表完整 0.7 功能或稳定版。
 
-本仓库提供源码与构建方法，当前 Public 仓库暂未提供独立公开 Release 下载。`0.7.0-alpha.2` 是首个计划公开发布二进制的 Public 版本；历史 Private `v0.7.0-alpha.1` 保持原样，不重新发布、不覆盖、不删除。原 Private 仓库中的 Release、分支、标签和 Issue 不随快照迁移。发行来源与验收边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)；安装前完整备份世界，并先在副本中试用。
+本仓库提供源码与构建方法，当前 Public 仓库暂未提供独立公开 Release 下载。`0.7.0-alpha.2` 是首个计划公开发布二进制的 Public 版本；历史 Private `v0.7.0-alpha.1` 保持原样，不重新发布、覆盖、删除。原 Private 仓库中的 Release、分支、标签和 Issue 不随快照迁移。发行来源与验收边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)；安装前完整备份世界，并先在副本中试用。
 
 ![气象站中文界面](docs/images/beta7-station-zh-cn.png)
 
