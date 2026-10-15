@@ -124,7 +124,7 @@ Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` �
 
 非商业个人用途及正式文本列明的组织用途按 PolyForm 原文判断。收费服务器和一般企业业务部署可能需要单独商业授权；媒体许可不提供这些软件运营权限。收费分发、收费整合包等场景涉及 Distribution License 与用途条款的解释空间，请联系维护者确认具体模式。此联系建议不把所有收费分发宣称为已被明确禁止，也不增加正式文本未设的批准义务或缩减其已授权利。
 
-**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。历史 Private `v0.7.0-alpha.1` 保持原包与来源，不重新发布或覆盖；Public alpha.2 是独立构建的发行，不能冒充历史二进制。来源边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
+**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。历史 Private `v0.7.0-alpha.1` 保持原包与来源，不重新发布、覆盖、删除；Public alpha.2 是独立构建的发行，不能冒充历史二进制。来源边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
 
 第三方源码拷贝、Wrapper 和依赖见 [THIRD_PARTY_NOTICES.md](docs/legal/THIRD_PARTY_NOTICES.md)，来源记录见 [SOURCE_PROVENANCE.md](docs/legal/SOURCE_PROVENANCE.md)，未来外部贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。本项目采用非商业源码可用许可，不将新许可称为 OSI 意义上的开源许可。
 
