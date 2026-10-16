@@ -1,4 +1,4 @@
-> 当前 Public 源码版本为 `0.7.0-alpha.2`，是首个计划公开发布二进制的版本，尚未发布。最初公开快照来源为历史 Private 提交 `11b5cdbd119a55f071aac48464623e61575cb167`。下文候选、路线和旧日期描述保留其历史语境；当前发行与验证边界见 [PUBLIC_SNAPSHOT.md](PUBLIC_SNAPSHOT.md)。P1 已合入，WEATHER 结构为 2，WIND/METER 为 1；环境风粒子、风声、统一设置页及协议 v3 未交付。
+> `0.7.0-alpha.2` 已于 2026-10-15 作为首个 Public 二进制 Pre-release 发布，标签为 `v0.7.0-alpha.2`，精确发行源码目标为 `e6d6076835e490653f492f50096eeb9149a17ae3`，不是发布后的 main 文档提交。最初公开快照来源为历史 Private 提交 `11b5cdbd119a55f071aac48464623e61575cb167`。下文候选、路线和旧日期描述保留其历史语境；当前发行与验证边界见 [PUBLIC_SNAPSHOT.md](PUBLIC_SNAPSHOT.md)。P1 已合入，WEATHER 结构为 2，WIND/METER 为 1；环境风粒子、风声、统一设置页及协议 v3 未交付。
 
 # Sky Signs 存档格式与迁移
 
