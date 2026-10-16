@@ -10,6 +10,8 @@ Gitleaks 固定为 8.30.1，下载官方 Linux 发行并验证固定 SHA-256；�
 
 这套 CI 不启动 Minecraft、客户端 GameTest 或专用服务器，不接受 EULA，不上传构建 artifact，不创建 tag、Release 或部署。`compileGametestJava` 只验证源码编译；`test NO-SOURCE` 不代表功能测试通过。游戏、多人、光影、真实旧存档和长期验证仍按下文单独记录。
 
+独立的 [Public Identity Guard](../.github/workflows/identity-guard.yml) 提供 `Commit identity guard` 检查，使用事件中的精确 SHA：PR 检查 `base.sha..head.sha`，main push 检查 `before..after`。完整获取历史后，逐条检查该范围内所有提交的原始 author／committer 邮箱，只允许非空用户名的 `@users.noreply.github.com` 地址或精确的 `noreply@github.com`；不使用 mailmap 替换身份。既有历史中的私人邮箱不作为全历史阻断条件，也不因此被删除。空范围、全零或无法解析的 SHA、浅克隆均明确失败；日志输出本轮范围、数量和各提交身份，不读取或打印凭据。隔离临时 Git 仓库中的正反例由 [身份检查测试](../scripts/test-public-commit-identities.py) 验证，不改真实历史。本检查是否成为 main 必需检查，以实际 ruleset 为准；新增 workflow 本身不修改保护规则。
+
 ## 0.7.0-alpha.1 Local 候选验收（2026-10-13，尚未发布）
 
 精确候选 `1cf474050620deefa9719c1eccfa9574f85a04ad` 的 build／compileGametestJava、显式 #49 默认完整回归、独立 P1 专项均退出 0。默认回归 17 ready／4 epoch／16 截图，认证与逐阶段发送集合核验通过；普通 alpha.1 JAR 新隔离实例完成真实 v1 自动世界副本首次迁移／重开及部分暂停、手动风、自动恢复，两次正常保存退出。生产 JAR SHA-256 为 `4f11d32dd5d23365306456566d05e3785b27458f0543be3d9d1501e46829076a`，不含 Sky Signs 测试模组／#49 类；普通组合的 Fabric API 自带 dormant gametest API 不等于测试模组激活。

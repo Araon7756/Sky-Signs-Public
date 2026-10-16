@@ -1,0 +1,41 @@
+name: Public Identity Guard
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  identity:
+    name: Commit identity guard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout event head with full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.event.after }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify identity guard fixtures
+        run: python3 scripts/test-public-commit-identities.py
+      - name: Check all commits in the event range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
+        run: |
+          set -euo pipefail
+          case "$EVENT_NAME" in
+            pull_request|push) ;;
+            *) echo 'ERROR: unsupported event; cannot determine a safe commit range.'; exit 2 ;;
+          esac
+          python3 scripts/check-public-commit-identities.py --base "$BASE_SHA" --head "$HEAD_SHA"
