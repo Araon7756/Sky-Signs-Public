@@ -58,12 +58,23 @@ Gitleaks 固定为 8.30.1，下载官方 Linux 发行并验证固定 SHA-256；�
 
 #49 是**默认不加载的测试框架源码补丁**。单独运行 `runClientGameTest` 不会自动启用。必须同时传入 `-I scripts/network-synchronizer-patch.gradle`、`-PnetworkSynchronizerPatch=true` 和指向被测工作树绝对路径的 `-PnetworkPatchRoot=…`；隔离目录另由 `scripts/inf01-isolated-run.gradle` 与唯一 runId 指定。补丁只替换固定上游测试模块中的同步器外部类，不写原缓存、不改生产依赖或发行 JAR。
 
-下面是在**已完成 Git 检查／fetch 且核对精确 SHA 的独立工作树**中的 Windows PowerShell 模板。模板用于当前公开快照；历史 ad11e502 的结果只适用于当时被测输入。本次不执行客户端入口。先配置已有 JDK 21 并确认 `java -version`；应无其他正在执行的验收客户端。`--offline` 仅适用于缓存完整的环境。模板遇到已有 `SKYSIGNS_*` 模式或重用目录会停止，避免把专项／保护模式当成默认回归；不会清理原有实例。
+下面是在**已完成 Git 检查／fetch、工作树干净且核对精确 SHA 的独立工作树**中的 Windows PowerShell 模板。模板用于当前公开快照；历史 ad11e502 的结果只适用于当时被测输入。本次不执行客户端入口。先配置已有 JDK 21 并确认 `java -version`；应无其他正在执行的验收客户端。`--offline` 仅适用于缓存完整的环境。模板遇到已有 `SKYSIGNS_*` 模式或重用目录会停止，避免把专项／保护模式当成默认回归；不会清理原有实例。
+
+`command.json` 中 `sourceSnapshot` 仅记录初始 Private 文件快照来源；`publicCommit` 在运行时读取被测 Public 工作树的 `HEAD`，`worktreeDirty` 记录跟踪及未跟踪文件的修改状态（不含被 Git 忽略的构建输出），`branch` 记录当前分支，分离 HEAD 时为 `null`。这些值在创建本轮输出目录前读取；如启动检查发现 dirty，应先停止并报告，不能把带修改的运行写成精确提交验收。历史快照 SHA、发行源码目标与实际被测 Public 提交不能互相替代。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
 $CandidateRoot = (Resolve-Path '.').Path
-# Confirm the reviewed snapshot manifest before testing; no old Git objects are required.
+# Read the actual Public checkout; no old Private Git objects are required.
+$PublicCommit = & git -C $CandidateRoot rev-parse --verify HEAD
+if ($LASTEXITCODE -ne 0) { throw 'Cannot read the Public commit.' }
+$PublicCommit = $PublicCommit.Trim()
+$PublicStatus = @(& git -C $CandidateRoot status --porcelain=v1 --untracked-files=all)
+if ($LASTEXITCODE -ne 0) { throw 'Cannot read the Public worktree status.' }
+$WorktreeDirty = $PublicStatus.Count -ne 0
+$PublicBranch = & git -C $CandidateRoot branch --show-current
+if ($LASTEXITCODE -ne 0) { throw 'Cannot read the Public branch.' }
+if ([string]::IsNullOrWhiteSpace($PublicBranch)) { $PublicBranch = $null }
 # Use a fresh isolated test directory and preserve prior evidence.
 if (@(Get-ChildItem Env: | Where-Object Name -Like 'SKYSIGNS_*').Count -ne 0) {
     throw 'Existing SKYSIGNS modes must be reviewed before this default run.'
@@ -84,7 +95,9 @@ $RunArgs = @(
     '-PnetworkSynchronizerPatch=true', "-PnetworkPatchRoot=$CandidateRoot"
 )
 try {
-    @{ snapshot = '11b5cdbd119a55f071aac48464623e61575cb167'; root = $CandidateRoot;
+    @{ sourceSnapshot = '11b5cdbd119a55f071aac48464623e61575cb167';
+       publicCommit = $PublicCommit; worktreeDirty = $WorktreeDirty; branch = $PublicBranch;
+       root = $CandidateRoot;
        runId = $RunId; instance = $Instance; args = $RunArgs;
        started = (Get-Date).ToString('o'); java = $env:JAVA_HOME;
        environment = @{ SKYSIGNS_INF01_OUTPUT = $env:SKYSIGNS_INF01_OUTPUT }
@@ -116,7 +129,7 @@ try {
 SKYSIGNS_P1_ONLY=1 bash ./gradlew runClientGameTest --offline --no-daemon
 ```
 
-Cloud 已有图形依赖时可用 `scripts/run-client-tests-xvfb.sh --offline`；Windows 按现有 argfile 入口启动并设置同一环境变量。专项不包含游戏存档重开、真实旧玩家世界、UI／语言／光影或性能，不能替代 Local 验收。取消该变量后才是默认完整回归。原生重开下载等待与网络同步器已知失败保持；本 P1 不修等待条件、不减视距、不启用保护、不删除重开断言。
+Cloud 已有图形依赖时可用 `bash scripts/run-client-tests-xvfb.sh --offline`；Windows 按现有 argfile 入口启动并设置同一环境变量。专项不包含游戏存档重开、真实旧玩家世界、UI／语言／光影或性能，不能替代 Local 验收。取消该变量后才是默认完整回归。原生重开下载等待与网络同步器已知失败保持；本 P1 不修等待条件、不减视距、不启用保护、不删除重开断言。
 
 ## 环境与命令
 
@@ -155,7 +168,7 @@ Cloud 已有图形依赖时可用 `scripts/run-client-tests-xvfb.sh --offline`�
 
 ### 独立湿度计性能模式
 
-候选分支新增 `SKYSIGNS_PERFORMANCE_TEST=1` 入口：运行五种对照场景、三轮世界 tick／帧间隔采样，以及独立算法批量计时。该环境变量启用时不运行原有完整回归；验收完整行为前须取消它。默认入口不变，生产 JAR 不包含性能测试类。可使用 `scripts/run-client-tests-xvfb.sh` 启动已有 JDK／图形依赖；该脚本不提供依赖安装或通用 Cloud setup。
+候选分支新增 `SKYSIGNS_PERFORMANCE_TEST=1` 入口：运行五种对照场景、三轮世界 tick／帧间隔采样，以及独立算法批量计时。该环境变量启用时不运行原有完整回归；验收完整行为前须取消它。默认入口不变，生产 JAR 不包含性能测试类。可使用 `bash scripts/run-client-tests-xvfb.sh` 启动已有 JDK／图形依赖；该脚本不提供依赖安装或通用 Cloud setup。
 
 场景、AFK 限帧控制、结果与缓存设计见 [湿度计性能基线](HYGROMETER_PERFORMANCE.md)。这是短时集成单人测量，不是多人、长期容量、硬件 GPU 或性能无回退保证。
 
