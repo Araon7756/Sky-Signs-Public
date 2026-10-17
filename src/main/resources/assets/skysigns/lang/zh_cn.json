@@ -77,5 +77,18 @@
   "weather.skysigns.description.easing": "%s（天气缓和中）",
   "weather.skysigns.description.transition": "%s（天气过渡中）",
   "reading.skysigns.forecast.transition": "正在过渡至%s；尚未安排下一轮预报",
-  "reading.skysigns.forecast.paused": "%s（预报已暂停）"
+  "reading.skysigns.forecast.paused": "%s（预报已暂停）",
+  "key.skysigns.settings": "Sky Signs 设置",
+  "key.category.skysigns.settings": "Sky Signs",
+  "screen.skysigns.settings.title": "Sky Signs 设置",
+  "screen.skysigns.settings.short": "设置…",
+  "screen.skysigns.settings.precipitation": "降水倾斜：%s",
+  "screen.skysigns.settings.strength": "表现强度：%s%%",
+  "screen.skysigns.settings.defaults": "恢复默认",
+  "screen.skysigns.settings.help": "修改立即生效，完成或 Esc 保存。表现强度不影响实际风况和仪表读数。外部修改文件需重启。",
+  "screen.skysigns.settings.iris_active": "Iris 光影开启时降水倾斜不可用。已保留你的偏好。",
+  "screen.skysigns.settings.iris_error": "无法查询 Iris API，降水倾斜暂不可用。已保留你的偏好。",
+  "screen.skysigns.settings.save_failed": "设置已生效，但未保存。重启后将恢复上次保存值。可重试或不保存返回。",
+  "screen.skysigns.settings.retry": "重试保存",
+  "screen.skysigns.settings.return_unsaved": "不保存返回"
 }

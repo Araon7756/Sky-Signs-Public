@@ -77,5 +77,18 @@
   "weather.skysigns.description.easing": "%s (easing)",
   "weather.skysigns.description.transition": "%s (transitioning)",
   "reading.skysigns.forecast.transition": "Transition to %s; next forecast not scheduled",
-  "reading.skysigns.forecast.paused": "%s (forecast paused)"
+  "reading.skysigns.forecast.paused": "%s (forecast paused)",
+  "key.skysigns.settings": "Sky Signs Settings",
+  "key.category.skysigns.settings": "Sky Signs",
+  "screen.skysigns.settings.title": "Sky Signs Settings",
+  "screen.skysigns.settings.short": "Settings…",
+  "screen.skysigns.settings.precipitation": "Precipitation tilt: %s",
+  "screen.skysigns.settings.strength": "Visual strength: %s%%",
+  "screen.skysigns.settings.defaults": "Reset defaults",
+  "screen.skysigns.settings.help": "Changes apply immediately. Done or Esc saves. Visual strength does not change wind or instrument readings. External file edits require a restart.",
+  "screen.skysigns.settings.iris_active": "Tilt is unavailable while Iris shaders are enabled. Your preferences are retained.",
+  "screen.skysigns.settings.iris_error": "Tilt is unavailable because the Iris API could not be queried. Your preferences are retained.",
+  "screen.skysigns.settings.save_failed": "Settings are active but were not saved. Restarting will restore the last saved values. Retry, or return without saving.",
+  "screen.skysigns.settings.retry": "Retry save",
+  "screen.skysigns.settings.return_unsaved": "Return unsaved"
 }

@@ -4,6 +4,12 @@
 
 > **当前公开发行：0.7.0-alpha.2 · Minecraft Java 1.21.10 · Fabric · Java 21。** 这是首个 Public 二进制发行，属于 alpha / P1 阶段预览，不代表完整 0.7 功能或稳定版。
 
+## 下一版候选：0.7.0-alpha.3
+
+本分支正在准备 P3 客户端设置更新，尚未发布；下方下载仍是已发布的 Public alpha.2。alpha.3 增加共用客户端风状态、游戏内配置即时更新与原版风格设置页。设置按键默认未绑定，可在原版控制设置中绑定，或从气象站标题栏进入；降水倾斜开关和 0～100% 强度立即生效，关闭保留强度，完成／Esc 保存，保存失败可重试或明确不保存返回。Iris 光影开启或 API 查询失败时退让并保留偏好。
+
+设置只影响当前玩家的画面，不改变服务端天气、风况、仪表读数或其他玩家。没有新增环境风粒子、风声、协议或存档结构。候选来源、验证状态与未覆盖范围见 [alpha.3 发布准备](docs/RELEASE_0_7_0_ALPHA_3.md)。
+
 ## 下载与安装
 
 **[下载 0.7.0-alpha.2 普通 JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/skysigns-0.7.0-alpha.2.jar)** · [发行说明与全部附件](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.2)
@@ -84,7 +90,7 @@ Photon 的降雪可见度差异、动态忽隐忽现反馈及历史窗口缩放�
 
 ## 客户端设置
 
-首次运行后会生成 `config/skysigns-client.properties`。修改后需重启游戏：
+首次运行后会生成 `config/skysigns-client.properties`。alpha.3 候选中的游戏内设置立即生效，完成／Esc 保存；游戏外手动编辑此文件仍需重启游戏。已发布 alpha.2 只支持启动读取：
 
 ```properties
 wind_precipitation_enabled=true
