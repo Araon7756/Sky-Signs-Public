@@ -7,6 +7,9 @@ import cn.skysigns.registry.ModBlocks;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import cn.skysigns.client.ClientSession;
 import net.minecraft.client.gui.tooltip.TooltipPositioner;
 import org.joml.Vector2i;
 import net.minecraft.text.Text;
@@ -24,6 +27,7 @@ public final class WeatherStationScreen extends Screen {
                     Math.max(TOOLTIP_MARGIN, screenHeight - tooltipHeight - TOOLTIP_MARGIN)));
 
     private StationReportPayload report;
+    private final ClientSession session;
     private int refreshTicks;
     private int panelWidth;
     private int pointerX;
@@ -33,6 +37,25 @@ public final class WeatherStationScreen extends Screen {
     public WeatherStationScreen(StationReportPayload report) {
         super(Text.translatable("screen.skysigns.station.title"));
         this.report = report;
+        this.session = ClientSession.capture(MinecraftClient.getInstance());
+    }
+
+    @Override
+    protected void init() {
+        int panel = Math.max(1, Math.min(420, width - 12));
+        int panelHeight = height < 240 ? 172 : 228;
+        int top = Math.max(0, (height - panelHeight) / 2);
+        addDrawableChild(ButtonWidget.builder(Text.translatable("screen.skysigns.settings.short"),
+                button -> client.setScreen(new ClientSettingsScreen(this)))
+                .dimensions((width + panel) / 2 - 84, top + 2, 80, 20).build());
+    }
+
+    public boolean isValidParent(MinecraftClient client) {
+        if (!session.matches(client) || client.player == null) return false;
+        BlockPos pos = BlockPos.fromLong(report.stationPos());
+        return client.world.getBlockState(pos).isOf(ModBlocks.WEATHER_STATION)
+                && !cn.skysigns.block.WaterAwareInstrument.isSubmerged(client.world, pos)
+                && client.player.squaredDistanceTo(Vec3d.ofCenter(pos)) <= 64.0D;
     }
 
     public long stationPos() {
@@ -50,14 +73,7 @@ public final class WeatherStationScreen extends Screen {
 
     @Override
     public void tick() {
-        if (client == null || client.world == null || client.player == null) {
-            close();
-            return;
-        }
-        BlockPos pos = BlockPos.fromLong(report.stationPos());
-        if (!client.world.getBlockState(pos).isOf(ModBlocks.WEATHER_STATION)
-                || cn.skysigns.block.WaterAwareInstrument.isSubmerged(client.world, pos)
-                || client.player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 64.0D) {
+        if (client == null || !isValidParent(client)) {
             close();
             return;
         }
@@ -69,7 +85,6 @@ public final class WeatherStationScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
         panelWidth = Math.max(1, Math.min(420, width - 12));
         pointerX = mouseX;
         pointerY = mouseY;
@@ -84,7 +99,7 @@ public final class WeatherStationScreen extends Screen {
         int top = Math.max(0, (height - panelHeight) / 2);
         context.fill(left, top, left + panelWidth, top + panelHeight, 0xFF183E50);
         context.fill(left + 2, top + header, left + panelWidth - 2, top + panelHeight - 2, 0xFFF3F6F4);
-        fittedText(context, title, left + 12, top + (header - 9) / 2, panelWidth - 24, 0xFFFFFFFF);
+        fittedText(context, title, left + 12, top + (header - 9) / 2, panelWidth - 104, 0xFFFFFFFF);
         int y = top + header;
         context.fill(left + 8, y + 3, left + panelWidth - 8, y + weatherHeight - 2, 0xFFE0ECEF);
         int weatherLabelWidth = textRenderer.getWidth(Text.translatable("screen.skysigns.station.weather")) + 10;
@@ -123,6 +138,7 @@ public final class WeatherStationScreen extends Screen {
             fittedText(context, Text.translatable("screen.skysigns.station.manual"),
                     left + 14, y + 18, panelWidth - 28, 0xFF263E49);
         }
+        super.render(context, mouseX, mouseY, delta);
         if (hoveredText != null) {
             context.drawTooltip(textRenderer,
                     textRenderer.wrapLines(hoveredText, Math.max(1, width - TOOLTIP_MARGIN * 2)),

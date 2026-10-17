@@ -2,6 +2,10 @@
 
 # 构建与回归测试
 
+## Public alpha.3 候选（2026-10-17）
+
+本分支引入 Private P3 已验收源码，但 Public 版本号与随包法律说明具有独立来源，必须重新构建和审计，不能将 Private alpha.2 的包摘要或运行直接写为本版通过。当前实际命令、来源、结果与未验证范围见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)。原始 Private 日志／截图及世界不随公开仓库迁移。
+
 ## Public 仓库基础 CI
 
 [Public CI](../.github/workflows/public-ci.yml) 使用只读 `contents: read` 权限，在针对 `main` 的 Pull Request 和 `main` 推送上运行两个独立 job：`Java 21 build` 与 `Gitleaks`。前者使用 Java 21 和现有 Wrapper，执行 `bash ./gradlew build compileGametestJava --no-daemon --max-workers=4`；通过 bash 调用不依赖 Wrapper 的 Git 执行位，也不升级构建或游戏依赖。

@@ -2,7 +2,13 @@
 
 首次公开日期：2026-10-14。来源为原 Private 开发仓库提交 `11b5cdbd119a55f071aac48464623e61575cb167`。这是审核后的文件快照，不导入旧 `.git`、分支、标签、提交身份、Issue/PR、Release 或原始证据档案。本仓库为经审核后建立的独立 Public 源码仓库；原 Private 开发仓库继续保存完整历史和原始证据。
 
-## 当前 Public 发行状态
+## 0.7.0-alpha.3 发布准备（2026-10-17）
+
+本分支从 Public main `f3401d35b07eb18a572dd1695a5a83d201ed77a5` 引入已验收 P3 的 12 个源码／翻译路径；私有来源为 `afcefa99ee59673d1e8b648eb0f57211f54bc77f`，仅规范文本换行。公开版本号独立推进为 `0.7.0-alpha.3`，不覆盖已存在的 Public alpha.2，也不将今天的 Private 同名 alpha.2 包作为原 Public alpha.2 附件。
+
+只引入客户端实现、测试源码与翻译；不迁移旧 Git 历史、私有输出档案、世界、原始日志／截图、启动参数或个人身份信息。保留 Public 法律／来源文件和 CI／身份规则，从 Public 源码重新构建普通与 sources JAR，不复用或改名旧包。候选尚未提交／合并／发布，精确状态及验证边界见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)。
+
+## 既有 Public alpha.2 发行状态
 
 `0.7.0-alpha.2` 已于 2026-10-15 作为首个 Public 二进制 Pre-release 发布，标签为 [`v0.7.0-alpha.2`](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.2)。该发行的精确源码目标为 [`e6d6076835e490653f492f50096eeb9149a17ae3`](https://github.com/Araon7756/Sky-Signs-Public/commit/e6d6076835e490653f492f50096eeb9149a17ae3)，不是发布后的 `main` 文档提交。历史 Private `v0.7.0-alpha.1` 保持原样，不重新发布、不覆盖、不删除；不将不同字节的新构建作为同版本历史包发布。
 

@@ -59,6 +59,8 @@ public final class SkySignsClientGameTest implements FabricClientGameTest {
             return;
         }
         cn.skysigns.weather.P1Assertions.curves();
+        try { P3StateConfigAssertions.run(); }
+        catch (Exception exception) { throw new AssertionError("P3 state/config fixtures failed", exception); }
         ChunkReadiness.prepare(context);
         verifyModIcon();
         ModelUiAssertions.verifyResources();
@@ -106,6 +108,7 @@ public final class SkySignsClientGameTest implements FabricClientGameTest {
             StationReportPayload before = currentReport(context);
             check(hasWeather(before, SkyWeatherType.CLEAR) && !before.automatic(),
                     "Station did not show initial manual clear weather: " + before.weather());
+            P3ClientAssertions.verify(context, singleplayer, stationPos, before);
 
             // Fabric test worlds default doWeatherCycle=false. This scenario deliberately advances auto weather.
             singleplayer.getServer().runCommand("gamerule doWeatherCycle true");
