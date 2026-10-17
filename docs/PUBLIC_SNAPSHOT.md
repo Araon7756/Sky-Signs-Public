@@ -6,7 +6,7 @@
 
 本分支从 Public main `f3401d35b07eb18a572dd1695a5a83d201ed77a5` 引入已验收 P3 的 12 个源码／翻译路径；私有来源为 `afcefa99ee59673d1e8b648eb0f57211f54bc77f`，仅规范文本换行。公开版本号独立推进为 `0.7.0-alpha.3`，不覆盖已存在的 Public alpha.2，也不将今天的 Private 同名 alpha.2 包作为原 Public alpha.2 附件。
 
-只引入客户端实现、测试源码与翻译；不迁移旧 Git 历史、私有输出档案、世界、原始日志／截图、启动参数或个人身份信息。保留 Public 法律／来源文件和 CI／身份规则，从 Public 源码重新构建普通与 sources JAR，不复用或改名旧包。候选尚未提交／合并／发布，精确状态及验证边界见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)。
+只引入客户端实现、测试源码与翻译；不迁移旧 Git 历史、私有输出档案、世界、原始日志／截图、启动参数或个人身份信息。保留 Public 法律／来源文件和 CI／身份规则，从 Public 源码重新构建普通与 sources JAR，不复用或改名旧包。候选已通过 [PR #8](https://github.com/Araon7756/Sky-Signs-Public/pull/8) 提交并合并，alpha.3 尚未打标签或发布；合并后主线构建／Gitleaks 通过，合并作者导致的身份检查失败及验证边界见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)，不将其记为主线 CI 全通过。
 
 ## 既有 Public alpha.2 发行状态
 

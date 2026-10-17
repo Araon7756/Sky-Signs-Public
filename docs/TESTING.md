@@ -6,6 +6,8 @@
 
 本分支引入 Private P3 已验收源码，但 Public 版本号与随包法律说明具有独立来源，必须重新构建和审计，不能将 Private alpha.2 的包摘要或运行直接写为本版通过。当前实际命令、来源、结果与未验证范围见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)。原始 Private 日志／截图及世界不随公开仓库迁移。
 
+2026-10-17 合并后核对：PR #8 三项检查均通过；合并提交 `135badf461a064b3ce323e0ae9f026b87d4ac901` 的文件树与已测候选 `323aaf7cd0cecce4ff06d13fea7b29ac801e8062` 一致。main 的 `Java 21 build`／`Gitleaks` 通过，[Commit identity guard 失败](https://github.com/Araon7756/Sky-Signs-Public/actions/runs/39007737898/job/117323544515)，原因为合并作者使用账号默认邮箱，未符合公开 noreply 规则；不是候选生产源码或游戏断言失败。失败按原样保留，后续合并须显式指定公开 `--author-email` 并回读 author／committer；不改身份策略或旧历史，也不将本次来源核验记为新运行。
+
 ## Public 仓库基础 CI
 
 [Public CI](../.github/workflows/public-ci.yml) 使用只读 `contents: read` 权限，在针对 `main` 的 Pull Request 和 `main` 推送上运行两个独立 job：`Java 21 build` 与 `Gitleaks`。前者使用 Java 21 和现有 Wrapper，执行 `bash ./gradlew build compileGametestJava --no-daemon --max-workers=4`；通过 bash 调用不依赖 Wrapper 的 Git 执行位，也不升级构建或游戏依赖。
