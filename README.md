@@ -2,17 +2,11 @@
 
 为 Minecraft Java 版打造的原版风格天气观测模组。天象让晴天、降雨、雷暴和风况随时间变化，并通过风向标、气压计、湿度计与气象站，让玩家观察当前环境和下一阶段的天气。
 
-> **当前公开发行：0.7.0-alpha.2 · Minecraft Java 1.21.10 · Fabric · Java 21。** 这是首个 Public 二进制发行，属于 alpha / P1 阶段预览，不代表完整 0.7 功能或稳定版。
-
-## 下一版候选：0.7.0-alpha.3
-
-本分支正在准备 P3 客户端设置更新，尚未发布；下方下载仍是已发布的 Public alpha.2。alpha.3 增加共用客户端风状态、游戏内配置即时更新与原版风格设置页。设置按键默认未绑定，可在原版控制设置中绑定，或从气象站标题栏进入；降水倾斜开关和 0～100% 强度立即生效，关闭保留强度，完成／Esc 保存，保存失败可重试或明确不保存返回。Iris 光影开启或 API 查询失败时退让并保留偏好。
-
-设置只影响当前玩家的画面，不改变服务端天气、风况、仪表读数或其他玩家。没有新增环境风粒子、风声、协议或存档结构。候选来源、验证状态与未覆盖范围见 [alpha.3 发布准备](docs/RELEASE_0_7_0_ALPHA_3.md)。
+> **当前公开发行：[0.7.0-alpha.3 — P3 客户端设置预览](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.3)**，于 2026-10-17 发布，面向 Minecraft Java **1.21.10 · Fabric · Java 21**。在 P1 分阶段天气基础上加入共用客户端风状态、游戏内配置即时更新与原版风格设置页，属于 Pre-release，不代表完整 0.7 功能或稳定版。环境风粒子和风声尚未加入。
 
 ## 下载与安装
 
-**[下载 0.7.0-alpha.2 普通 JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/skysigns-0.7.0-alpha.2.jar)** · [发行说明与全部附件](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.2)
+**[下载 0.7.0-alpha.3 普通 JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/skysigns-0.7.0-alpha.3.jar)** · [发布说明](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/RELEASE_NOTES.md) · [测试报告](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/TEST_REPORT.md) · [SHA-256 校验清单](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/SHA256SUMS)
 
 | 项目 | 要求 |
 | --- | --- |
@@ -22,16 +16,16 @@
 | Java | Java 21 或更新版本；本次构建与验收使用 Java 21 |
 
 1. **升级前完整备份世界，并先在副本中试用。** 模组的数据保护不保证整个世界可安全降级。
-2. 在对应 Fabric 游戏实例安装 Fabric API，将 `skysigns-0.7.0-alpha.2.jar` 放入 `mods`，只保留一个天象版本。
+2. 在对应 Fabric 游戏实例安装 Fabric API，将 `skysigns-0.7.0-alpha.3.jar` 放入 `mods`，只保留一个天象版本。
 3. 不要把 `-sources.jar` 放入 `mods`；它是供开发者阅读的源码包。
 
-下载后可用 [SHA256SUMS](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/SHA256SUMS) 校验。普通 JAR 的 SHA-256：
+下载后可用 [SHA256SUMS](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/SHA256SUMS) 校验。普通 JAR 大小为 **745608 字节**，SHA-256：
 
 ```text
-f018190808978f216bcf96b0fadfcaf77934b89859668ef7789307c7e543632d
+e5d83192de25b3bf66b701fef4eca70dc6558d018ca22d4c47066f752623519d
 ```
 
-测试覆盖见 [TEST_REPORT.md](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/TEST_REPORT.md)，精确源码提交、工具链和产物摘要见 [BUILD_PROVENANCE.md](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/BUILD_PROVENANCE.md)。
+测试覆盖见 [TEST_REPORT.md](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/TEST_REPORT.md)，精确源码提交、工具链和产物摘要见 [BUILD_PROVENANCE.md](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/BUILD_PROVENANCE.md)。开发者可另取 [sources JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/skysigns-0.7.0-alpha.3-sources.jar)。
 
 ![气象站中文界面](docs/images/beta7-station-zh-cn.png)
 
@@ -65,11 +59,15 @@ f018190808978f216bcf96b0fadfcaf77934b89859668ef7789307c7e543632d
 
 ## 本次验证与已知限制
 
-`0.7.0-alpha.2` 已完成 Java 21 干净构建、测试源码编译、JAR 内容审计、隐私与 Gitleaks 扫描、SHA-256 校验。最终普通 JAR 在新建隔离单人世界中完成最低限度客户端 smoke test：主菜单与模组加载、进入世界、`status`／`forecast`、四种仪器实际放置、打开气象站、原版 `/weather rain`，以及正常保存和退出。
+`0.7.0-alpha.3` 已完成 Public 源码独立构建、测试源码编译、JAR 内容审计、隐私与 Gitleaks 扫描、SHA-256 校验，以及默认完整客户端回归：17 个就绪阶段、4 个连接 epoch、24 张自动截图。最终普通 JAR 在最小 Fabric API 隔离实例中两次独立启动，中文 GUI2、1280×720 验证了关闭保留强度、保存后重启持久化、恢复默认和未知键保留，两次正常保存退出，3 张 F2 原始截图已实际目视。
 
-**这次 smoke test 不是完整功能回归。** 完整 P1 矩阵、多人／专用服务器、旧客户端互通、完整旧世界迁移、性能回退和长期可靠性仍未验证；`test NO-SOURCE` 和 CI 构建成功也不代表这些范围通过。
+发行源码目标上的 `Java 21 build`、`Gitleaks`、`Commit identity guard` 均通过。回归在候选提交前运行，最终发行源码的生产／构建／测试／法律输入已核对一致，合并后未重新运行游戏；完整来源及前次合并身份检查失败的保留记录见发行测试报告。#49 仅显式用于测试框架，不进入普通 JAR，原生方格区块等待仍未修复。
 
-Photon 的降雪可见度差异、动态忽隐忽现反馈及历史窗口缩放／闪电黑屏问题仍保留，根因未定位。有限时窗未捕获不等于问题解决，本次没有运行光影兼容性回归。详见 [已知限制](docs/KNOWN_ISSUES.md) 和发行附件 [测试报告](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.2/TEST_REPORT.md)。
+本轮没有单独重跑 P1_ONLY 或真实 Iris／Photon 矩阵。完整 P1、GUI／语言／DPI／分辨率与旁白听感、全部权限／I/O 故障、多人／专用服务器、旧客户端互通、完整旧世界迁移、性能回退和长期可靠性仍未验证；`test NO-SOURCE`、CI 构建及短时单人结果不扩大为这些范围通过。
+
+Photon 的降雪可见度差异、动态忽隐忽现反馈及历史窗口缩放／闪电黑屏问题仍保留，根因未定位。有限时窗未捕获不等于问题解决；模拟 Iris API 断言与历史真实光影的限定证据分别记录。详见 [已知限制](docs/KNOWN_ISSUES.md) 和发行附件 [测试报告](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/TEST_REPORT.md)。
+
+[Public alpha.2](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.2) 是 2026-10-15 的首个 Public 二进制发行，其新建世界 smoke test 与当时的未验证范围保留在该版本附件中。旧标签、附件及结果保持原样。
 
 历史 Private alpha.1 的完整客户端回归、P1 专项和 WEATHER v1 自动世界副本的有限迁移记录仅作为历史摘要，不能算作本轮重新执行。历史验收和失败证据、旧 Git 历史及原始日志／录像继续留在 Private 档案，见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)。
 
@@ -90,7 +88,9 @@ Photon 的降雪可见度差异、动态忽隐忽现反馈及历史窗口缩放�
 
 ## 客户端设置
 
-首次运行后会生成 `config/skysigns-client.properties`。alpha.3 候选中的游戏内设置立即生效，完成／Esc 保存；游戏外手动编辑此文件仍需重启游戏。已发布 alpha.2 只支持启动读取：
+alpha.3 提供原版风格“Sky Signs 设置”。设置按键默认未绑定，可在原版控制设置中绑定，或从气象站标题栏进入；降水倾斜开关和 0～100% 强度立即生效，关闭保留强度，完成／Esc 保存。保存失败可重试或明确不保存返回；恢复默认值保留未知配置键。Iris 光影开启或 API 查询失败时显示原因、停用倾斜控件并保留偏好。
+
+这些设置仅影响当前玩家的画面，不改变服务端天气、真实风况、仪表读数或其他玩家。配置文件为 `config/skysigns-client.properties`；在游戏外手动编辑后需重启游戏：
 
 ```properties
 wind_precipitation_enabled=true
@@ -110,9 +110,9 @@ wind_precipitation_strength=1.0
 
 Linux/macOS 可用 `bash ./gradlew build --no-daemon` 和 `bash ./gradlew compileGametestJava --no-daemon`。测试源码编译不启动游戏；客户端回归方法及显式测试补丁入口见 [TESTING.md](docs/TESTING.md)。
 
-构建产物位于 `build/libs/`。需要对应已发布版本的源码时，使用 `v0.7.0-alpha.2` 标签；精确构建来源及官方 JAR 摘要以 Release 附件为准。
+构建产物位于 `build/libs/`。需要对应已发布版本的源码时，使用 `v0.7.0-alpha.3` 标签；精确构建来源及官方 JAR 摘要以 Release 附件为准。
 
-Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` 的 Pull Request 和 `main` 推送上检查 Java 21 构建、测试源码编译及 Gitleaks。CI 不启动 Minecraft；`test NO-SOURCE`、构建和源码编译成功均不代表客户端、多人、专用服务端、光影或长期稳定性通过。具体范围见 [测试说明](docs/TESTING.md#public-仓库基础-ci)。
+Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` 的 Pull Request 和 `main` 推送上检查 Java 21 构建、测试源码编译及 Gitleaks；独立的 [Commit identity guard](.github/workflows/identity-guard.yml) 检查本次新增提交的作者和提交者邮箱。CI 不启动 Minecraft；`test NO-SOURCE`、构建和源码编译成功均不代表客户端、多人、专用服务端、光影或长期稳定性通过。具体范围见 [测试说明](docs/TESTING.md#public-仓库基础-ci)。
 
 ## 文档与反馈
 
@@ -130,7 +130,7 @@ Public 仓库的 [基础 CI](.github/workflows/public-ci.yml) 在针对 `main` �
 
 非商业个人用途及正式文本列明的组织用途按 PolyForm 原文判断。收费服务器和一般企业业务部署可能需要单独商业授权；媒体许可不提供这些软件运营权限。收费分发、收费整合包等场景涉及 Distribution License 与用途条款的解释空间，请联系维护者确认具体模式。此联系建议不把所有收费分发宣称为已被明确禁止，也不增加正式文本未设的批准义务或缩减其已授权利。
 
-**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。历史 Private `v0.7.0-alpha.1` 保持原包与来源，不重新发布、覆盖、删除；Public alpha.2 是独立构建的发行，不能冒充历史二进制。来源边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md)。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
+**既有正式发布 v0.6.0-beta.9 及其他历史 MIT 版本保持原授权。** 不能用最新根 LICENSE 改写旧 Release。历史 Private `v0.7.0-alpha.1` 保持原包与来源，不重新发布、覆盖、删除；Public alpha.2 与 alpha.3 均从各自的公开源码独立构建，保留对应附件及来源记录。来源边界见 [公开快照说明](docs/PUBLIC_SNAPSHOT.md) 和本版发行附件。旧 MIT 代码仍可在符合旧许可通知条件下继续商业使用和衍生；未来新增表达不会自动继承旧 MIT。
 
 第三方源码拷贝、Wrapper 和依赖见 [THIRD_PARTY_NOTICES.md](docs/legal/THIRD_PARTY_NOTICES.md)，来源记录见 [SOURCE_PROVENANCE.md](docs/legal/SOURCE_PROVENANCE.md)，未来外部贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。本项目采用非商业源码可用许可，不将新许可称为 OSI 意义上的开源许可。
 
