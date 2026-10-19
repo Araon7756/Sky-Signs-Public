@@ -1,6 +1,8 @@
-# Public 0.7.0-alpha.3 — P3 客户端设置发布准备
+# Public 0.7.0-alpha.3 — P3 客户端设置发行记录
 
-状态：2026-10-17，候选提交 `323aaf7cd0cecce4ff06d13fea7b29ac801e8062` 已通过 [PR #8](https://github.com/Araon7756/Sky-Signs-Public/pull/8) 合并为 `135badf461a064b3ce323e0ae9f026b87d4ac901`。尚未创建 alpha.3 标签或 Release；既有 Public alpha.2 保留原标签、附件和验证边界。
+当前状态（2026-10-19 核对）：`v0.7.0-alpha.3` 已于 2026-10-17 在 Public 仓库发布为 Pre-release，精确发行源码目标为 `9cbdd91a3bc47d1762a5dcb9732c86b447cda564`。该目标包含已测候选 `323aaf7cd0cecce4ff06d13fea7b29ac801e8062` 经 [PR #8](https://github.com/Araon7756/Sky-Signs-Public/pull/8) 合并的实现，以及后续 [PR #9](https://github.com/Araon7756/Sky-Signs-Public/pull/9) 的文档记录。既有 Public alpha.2 保留原标签、附件和验证边界。
+
+[Release 页面](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.3) · [普通 JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/skysigns-0.7.0-alpha.3.jar) · [sources JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/skysigns-0.7.0-alpha.3-sources.jar) · [发布说明](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/RELEASE_NOTES.md) · [测试报告](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/TEST_REPORT.md) · [构建来源](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/BUILD_PROVENANCE.md) · [SHA256SUMS](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/SHA256SUMS)。
 
 ## 功能与来源
 
@@ -27,6 +29,8 @@
 
 PR #8 的 `Java 21 build`、`Gitleaks`、`Commit identity guard` 三项检查均通过。合并后 main 的构建与 Gitleaks 通过，但 [Commit identity guard 失败](https://github.com/Araon7756/Sky-Signs-Public/actions/runs/39007737898/job/117323544515)：合并命令未显式指定公开作者邮箱，GitHub 使用账号默认邮箱，导致合并提交不符合 noreply 规则；候选提交身份仍符合规则。该失败记录保留，不能写为主线 CI 全通过，也不能靠重跑相同范围令其通过。
 
+后续 [PR #9](https://github.com/Araon7756/Sky-Signs-Public/pull/9) 已于 2026-10-17 合并为 `9cbdd91a3bc47d1762a5dcb9732c86b447cda564`，该提交为正式 alpha.3 标签目标。其合并作者使用公开 noreply 邮箱，后续事件的三项检查通过；这是后续新增提交范围的结果，不覆盖上段 PR #8 的历史失败。
+
 后续公开 PR 的合并必须显式传入 `--author-email 291055905+Araon7756@users.noreply.github.com`，并继续以 `--match-head-commit <reviewed-sha>` 锁定候选。身份规则和旧历史保持原样；后续事件按真实 `base..head`／`before..after` 范围检查新增提交，不会改变本次失败结论。
 
 实际命令（JDK 21.0.12.1，既有离线缓存）：
@@ -39,9 +43,9 @@ PR #8 的 `Java 21 build`、`Gitleaks`、`Commit identity guard` 三项检查均
   '-PnetworkPatchRoot=<candidate-root>'
 ```
 
-测试运行时源码为 Public 基线加当时未提交差异；随后全部候选输入已提交为 `323aaf7cd0cecce4ff06d13fea7b29ac801e8062`。合并提交与该候选文件树完全一致，GitHub main 的 160 个文件 blob 已逐项核对；6 个本地附件保持已测字节。以上是来源等价核验，没有在合并提交上重新运行游戏。正式发布前仍需核对最终标签、产物来源和主线检查结果。README 保留已发布 alpha.2 下载，待 alpha.3 实际发布后再更新。
+测试运行时源码为 Public 基线加当时未提交差异；随后全部候选输入已提交为 `323aaf7cd0cecce4ff06d13fea7b29ac801e8062`。PR #8 合并提交与该候选文件树完全一致，当时 GitHub main 的 160 个文件 blob 已逐项核对。正式发行目标上的生产／构建／测试／法律输入与已测候选一致，6 个发行附件保留已测字节；精确来源以发行附件 [BUILD_PROVENANCE.md](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/BUILD_PROVENANCE.md) 为准。这是来源等价核验，没有在合并提交上重新运行游戏。
 
-拟发布附件：普通 JAR、sources JAR、发布说明、测试报告、构建来源及 SHA256SUMS。发布按 Pre-release、非 Latest 处理；标签须指向最终包含候选的 Public 提交。
+已发布附件：普通 JAR、sources JAR、发布说明、测试报告、构建来源及 SHA256SUMS，共 6 个。发布为 Pre-release；[PR #10](https://github.com/Araon7756/Sky-Signs-Public/pull/10) 已合并，首页已更新至 alpha.3 下载入口。后续合成指南及已知问题的文档提交不改变标签目标、附件或原验收结论。本次文档更新没有重新构建或运行游戏。
 
 ## 验证边界
 
