@@ -2,6 +2,24 @@
 
 # 已知限制与待验证事项
 
+## 内部渲染部件出现在物品浏览列表，名称显示为翻译键（2026-10-19）
+
+**状态：已确认显示问题，待处理；尚未修复。** 维护者提供的三张游戏截图显示，右侧物品浏览列表列出了以下内部部件，悬停名称分别显示为 `item.skysigns.weather_vane_rotor`、`item.skysigns.barometer_needle` 和 `item.skysigns.hygrometer_needle`。
+
+| 内部物品 ID | 实际用途 |
+| --- | --- |
+| `skysigns:weather_vane_rotor` | 风向标旋转箭体，用于随风向转动的模型部分。 |
+| `skysigns:barometer_needle` | 气压计指针，用于随气压读数调整角度。 |
+| `skysigns:hygrometer_needle` | 湿度计指针，用于随湿度读数调整角度。 |
+
+源码检查确认：三者在 [ModItems.java](../src/main/java/cn/skysigns/registry/ModItems.java) 中注册为内部物品，分别由 [风向标渲染器](../src/client/java/cn/skysigns/client/render/WeatherVaneBlockEntityRenderer.java) 和 [仪表渲染器](../src/client/java/cn/skysigns/client/render/MeterBlockEntityRenderer.java) 调用；当前中英文语言文件没有对应名称翻译。它们未加入原版创造物品栏分组，也不参与现有四种仪器的合成配方，但截图中的物品浏览列表仍展示了它们，容易让玩家误以为还需要单独制作或安装这些零件。
+
+正常使用时无需收集这些部件，直接合成和放置完整仪器即可，见 [生存合成指南](CRAFTING.md)。
+
+**待处理方向：保留三个物品的注册 ID 和渲染用途，在物品浏览列表中隐藏它们，并补上中英文名称作为兜底。** 具体隐藏方式应在确认物品浏览模组及其版本后确定；不能通过删除注册项或模型来隐藏，以免破坏现有渲染及兼容性。处理后应核验物品列表中的隐藏效果、中英文名称，以及风向标箭体和两种表盘指针的正常显示与转动。
+
+证据与范围：本条依据维护者 2026-10-19 的截图反馈及当前源码核对记录；原始截图未随本页附入。截图环境实际安装的 Sky Signs JAR、物品浏览模组及版本尚未核对，未在最小实例独立复现，也未验证其他物品浏览模组组合。本次仅登记已知问题，没有实施隐藏、补译或进行游戏回归。
+
 ## Public alpha.3 候选边界（2026-10-17）
 
 P3 设置候选的完整 GUI／语言／DPI／分辨率矩阵、旁白听感、全部文件权限／I/O 故障、旧客户端、所有旧档、多人／专服、专项性能与长期可靠性仍未覆盖。Iris API 模拟分支不代表真实光影兼容；沿用 Private P3 的限定历史证据须保留日期和来源，不能计为 Public alpha.3 新实测。Photon 雪可见度、动态反馈及历史黑屏根因和原生区块方格等待仍未修复。候选实际结果见 [发布准备](RELEASE_0_7_0_ALPHA_3.md)。
