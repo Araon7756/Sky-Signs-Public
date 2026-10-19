@@ -43,3 +43,7 @@ Gradle Wrapper 文件属于第三方。Minecraft、Yarn、Fabric Loader、Fabric
 `0.7.0-alpha.2` 已于 2026-10-15 作为首个 Public 二进制 Pre-release 发布，标签为 `v0.7.0-alpha.2`，精确发行源码目标为 `e6d6076835e490653f492f50096eeb9149a17ae3`，不是最初 Private 文件快照提交，也不是发布后的 main 文档提交。发行来源、验证边界及历史 Private `v0.7.0-alpha.1` 的原发行记录见 [公开快照说明](../PUBLIC_SNAPSHOT.md)；历史 Private alpha.1 保持原样，不重新发布、不覆盖、不删除。原始私人聊天、旧 Git 提交身份、个人别名关联及测试归档未随初始文件快照迁移；这不表示后续 Public 提交的身份元数据已经由上述历史来源审计覆盖。图标与尚无法确认的来源仍保留上文 AI-assisted / Unable to verify 边界。
 
 运行图标保留原 C2PA 生成来源元数据。已识别的 UUID 是生成清单／图像实例／证书标识，非玩家 UUID；元数据记录 ChatGPT/gpt-image 与 OpenAI 服务证书，没有识别出个人邮箱、用户名或私钥。本次未验证其密码学签名，不把元数据单独视为完整制作链证明。
+
+## 2026-10-19 合成配方示意图
+
+`docs/images/crafting-recipes.png` 由维护者指示 Codex 辅助，以本仓库四个配方 JSON 的 `pattern`、`key` 和 `result` 为输入，通过程序绘制文字、网格、色条及产出框。它是配方示意图，不是 Minecraft 游戏截图；没有引入第三方参考图片、原版物品纹理或游戏字体文件。使用本机系统字体绘制文字，未分发字体文件。该图记录为 **AI-assisted, no identified third-party source**，不据此承诺排他版权。配方与材料说明见 [生存合成指南](../CRAFTING.md)。
