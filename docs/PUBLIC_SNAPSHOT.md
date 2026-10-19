@@ -2,11 +2,19 @@
 
 首次公开日期：2026-10-14。来源为原 Private 开发仓库提交 `11b5cdbd119a55f071aac48464623e61575cb167`。这是审核后的文件快照，不导入旧 `.git`、分支、标签、提交身份、Issue/PR、Release 或原始证据档案。本仓库为经审核后建立的独立 Public 源码仓库；原 Private 开发仓库继续保存完整历史和原始证据。
 
-## 0.7.0-alpha.3 发布准备（2026-10-17）
+## 当前 Public 发行：0.7.0-alpha.3（2026-10-19 核对）
+
+`0.7.0-alpha.3` 已于 2026-10-17 作为 Public Pre-release 发布，标签为 [`v0.7.0-alpha.3`](https://github.com/Araon7756/Sky-Signs-Public/releases/tag/v0.7.0-alpha.3)，精确发行源码目标为 `9cbdd91a3bc47d1762a5dcb9732c86b447cda564`。它已包含 P3 共用客户端风状态、游戏内配置即时修改及原版风格设置页；没有加入环境风粒子、风声、新天气或协议 v3。历史 Public alpha.2 保留原标签、附件与验证边界。
+
+[普通 JAR](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/skysigns-0.7.0-alpha.3.jar) · [发布说明](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/RELEASE_NOTES.md) · [测试报告](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/TEST_REPORT.md) · [构建来源](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/BUILD_PROVENANCE.md) · [SHA256SUMS](https://github.com/Araon7756/Sky-Signs-Public/releases/download/v0.7.0-alpha.3/SHA256SUMS)。普通 JAR 为 745608 字节，SHA-256 为 `e5d83192de25b3bf66b701fef4eca70dc6558d018ca22d4c47066f752623519d`。
+
+公开发行的来源、已执行验证与未验证范围见 [alpha.3 发行记录](RELEASE_0_7_0_ALPHA_3.md)。本页更新只核对发行状态和文档，没有重新构建或运行游戏。2026-10-19 合并的合成指南与内部渲染部件问题登记属于后续文档更新，不改变历史发行包。
+
+### alpha.3 准备与合并历史（2026-10-17）
 
 本分支从 Public main `f3401d35b07eb18a572dd1695a5a83d201ed77a5` 引入已验收 P3 的 12 个源码／翻译路径；私有来源为 `afcefa99ee59673d1e8b648eb0f57211f54bc77f`，仅规范文本换行。公开版本号独立推进为 `0.7.0-alpha.3`，不覆盖已存在的 Public alpha.2，也不将今天的 Private 同名 alpha.2 包作为原 Public alpha.2 附件。
 
-只引入客户端实现、测试源码与翻译；不迁移旧 Git 历史、私有输出档案、世界、原始日志／截图、启动参数或个人身份信息。保留 Public 法律／来源文件和 CI／身份规则，从 Public 源码重新构建普通与 sources JAR，不复用或改名旧包。候选已通过 [PR #8](https://github.com/Araon7756/Sky-Signs-Public/pull/8) 提交并合并，alpha.3 尚未打标签或发布；合并后主线构建／Gitleaks 通过，合并作者导致的身份检查失败及验证边界见 [alpha.3 发布准备](RELEASE_0_7_0_ALPHA_3.md)，不将其记为主线 CI 全通过。
+只引入客户端实现、测试源码与翻译；不迁移旧 Git 历史、私有输出档案、世界、原始日志／截图、启动参数或个人身份信息。保留 Public 法律／来源文件和 CI／身份规则，从 Public 源码重新构建普通与 sources JAR，不复用或改名旧包。候选通过 [PR #8](https://github.com/Araon7756/Sky-Signs-Public/pull/8) 合并时，主线构建／Gitleaks 通过，但合并作者导致身份检查失败；该历史失败保留。后续 [PR #9](https://github.com/Araon7756/Sky-Signs-Public/pull/9) 已合并，使用公开 noreply 合并作者身份的后续主线检查通过，alpha.3 标签指向该提交；不能据此改写 PR #8 的失败结果。完整过程及验证边界见 [alpha.3 发行记录](RELEASE_0_7_0_ALPHA_3.md)。
 
 ## 既有 Public alpha.2 发行状态
 
